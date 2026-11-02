@@ -1,5 +1,5 @@
 {
-  "name": "mappedin-rutas-tematicas",
+  "name": "mappedin-theme-trails",
   "version": "1.0.0",
   "description": "Theme trails: a mall wayfinding demo with brand stops and in-path offers on Mappedin JS and a simulated Blue Dot",
   "scripts": {
