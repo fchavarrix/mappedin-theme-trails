@@ -220,6 +220,10 @@ button.trail.selected { background: #f5f8ff; }
 /* Stops of the chosen trail */
 .stops { list-style: none; margin: 0 0 12px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .stops li { display: flex; align-items: center; gap: 7px; padding: 6px; border: 1px solid var(--line); border-radius: 12px; min-width: 0; }
+.stops li { cursor: grab; user-select: none; background: #fff; }
+.stops li.chosen { cursor: grabbing; box-shadow: 0 6px 18px rgba(11, 18, 32, 0.18); }
+.stops li.ghost { opacity: 0.35; }
+.hint { margin: -6px 0 12px; font-size: 12px; }
 .stops li span strong, .stops li span small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .stops li > b {
   flex: none;

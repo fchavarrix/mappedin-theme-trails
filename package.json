@@ -12,10 +12,12 @@
   "type": "module",
   "dependencies": {
     "@mappedin/blue-dot": "^6.30.0-beta.0",
-    "@mappedin/mappedin-js": "^6.30.0"
+    "@mappedin/mappedin-js": "^6.30.0",
+    "sortablejs": "^1.15.7"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
+    "@types/sortablejs": "^1.15.9",
     "typescript": "^7.0.2",
     "vite": "^8.3.5"
   },

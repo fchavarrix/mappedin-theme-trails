@@ -8,6 +8,7 @@ import {
   type Space,
 } from '@mappedin/mappedin-js';
 import { BlueDot } from '@mappedin/blue-dot';
+import Sortable from 'sortablejs';
 import '@mappedin/mappedin-js/lib/index.css';
 import './style.css';
 import { lang, switchLang, t } from './i18n';
@@ -145,8 +146,6 @@ function candidates(coordinate: Coordinate) {
 async function route() {
   if (!start || !trail) return;
   mapView.Navigation.clear();
-  // Stops keep the trail's curated order, like a buyer journey (dessert comes last).
-  stops = trail.stops.map(brandById).filter(placed);
   legs = [];
   for (const from of candidates(start)) {
     const found = await mapData.getDirectionsMultiDestination(from, stops.map((b) => places.get(b.store)!.space!));
@@ -268,6 +267,13 @@ function stopWalk() {
 
 // --- Sheet ----------------------------------------------------------------
 
+// Stops start in the trail's curated order, like a buyer journey (dessert comes last).
+async function chooseTrail(item: Trail) {
+  trail = item;
+  stops = item.stops.map(brandById).filter(placed);
+  await route();
+}
+
 function trailCard(item: Trail) {
   const logos = item.stops.map(brandById).filter(placed).map((b) => badge(b, 'small')).join('');
   const card = el(
@@ -276,10 +282,7 @@ function trailCard(item: Trail) {
       <span class="text"><strong>${item.name[lang]}</strong><small>${item.pitch[lang]}</small><span class="logos">${logos}</span></span>
     </button>`,
   );
-  card.addEventListener('click', async () => {
-    trail = item;
-    await route();
-  });
+  card.addEventListener('click', () => chooseTrail(item));
   return card;
 }
 
@@ -288,12 +291,31 @@ function stopList() {
     `<ol class="stops">${stops
       .map(
         (b, i) =>
-          `<li>
+          `<li data-id="${b.id}">
             <b style="background:${trail!.color}">${i + 1}</b>${badge(b, 'small')}<span><strong>${b.name}</strong><small>${b.category[lang]}</small></span>
           </li>`,
       )
       .join('')}</ol>`,
   );
+}
+
+// The shopper can drag the stops into their own order; the route follows it.
+function sortableStops(list: HTMLElement) {
+  Sortable.create(list, {
+    animation: 150,
+    // Pointer-based dragging behaves the same with a mouse and a finger.
+    forceFallback: true,
+    fallbackTolerance: 3,
+    delay: 120,
+    delayOnTouchOnly: true,
+    ghostClass: 'ghost',
+    chosenClass: 'chosen',
+    onEnd: async ({ oldIndex, newIndex }) => {
+      if (oldIndex === newIndex) return;
+      stops = [...list.querySelectorAll<HTMLElement>('li')].map((li) => brandById(li.dataset.id!));
+      await route();
+    },
+  });
 }
 
 function render() {
@@ -322,7 +344,11 @@ function render() {
         ? t.routeMessage(stops.length, Math.round(distance), Math.max(1, Math.round(distance / 1.3 / 60)))
         : t.noRoute;
       ui.body.append(stopList());
-      if (legs.length) ui.actions.append(button(t.start, walk, true));
+      if (legs.length) {
+        ui.body.append(el(`<p class="hint">${t.reorderHint}</p>`));
+        sortableStops(ui.body.querySelector<HTMLElement>('.stops')!);
+        ui.actions.append(button(t.start, walk, true));
+      }
       ui.actions.append(button(t.otherTrail, resetAll));
       break;
     }
@@ -458,8 +484,8 @@ async function init() {
   mapView.Camera.focusOn(mapView.currentFloor, { duration: 0 });
 
   // ?trail=<id> opens a trail directly, for example from a QR code in the mall.
-  trail = trails.find((item) => item.id === new URLSearchParams(location.search).get('trail'));
-  if (trail) await route();
+  const linked = trails.find((item) => item.id === new URLSearchParams(location.search).get('trail'));
+  if (linked) await chooseTrail(linked);
 }
 
 applyStaticText();
