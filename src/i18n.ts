@@ -1,0 +1,104 @@
+export type Lang = 'es' | 'en';
+
+const LANG_KEY = 'rutas-tematicas:lang';
+
+const strings = {
+  es: {
+    appName: 'Rutas temáticas',
+    subtitle: 'Demo de recorridos con marcas · Mappedin JS',
+    stepChoose: '1 · Elige',
+    stepWalk: '2 · Recorre',
+    stepDone: '3 · Tus cupones',
+    loading: 'Cargando mapa…',
+    chooseTitle: '¿Qué te provoca hoy?',
+    chooseMessage: 'Elige una ruta y el mapa te lleva por sus tiendas. Estás en Informes; toca el mapa para cambiar tu punto de partida.',
+    routeMessage: (stops: number, m: number, min: number) => `${stops} tiendas · ${m} m · unos ${min} min caminando`,
+    noRoute: 'No hay ruta desde este punto. Toca otro lugar del pasillo.',
+    start: 'Empezar recorrido',
+    otherTrail: 'Otra ruta',
+    walkingTitle: 'En camino…',
+    walkingMessage: (next: string) => `Próxima parada: ${next}. Punto azul simulado.`,
+    stop: 'Detener',
+    stopLabel: (n: number, total: number) => `Parada ${n} de ${total}`,
+    offerTitle: 'Beneficio del locatario',
+    offerBody: 'Aquí la tienda publica su cupón o promoción del día desde el CMS del mall.',
+    save: 'Guardar y seguir',
+    skip: 'Seguir',
+    passing: 'Al paso',
+    eventLabel: 'Evento',
+    doneTitle: 'Recorrido completo',
+    doneMessage: (saved: number, seen: number) => `Guardaste ${saved} cupones y pasaste por ${seen} tiendas con beneficios.`,
+    doneNone: 'Tus cupones guardados aparecen aquí.',
+    mallNote: 'Para el mall: cada parada y cada «al paso» es una impresión medible por locatario.',
+    startOver: 'Elegir otra ruta',
+    youAreHere: 'Estás aquí',
+    loadErrorTitle: 'No se pudo cargar el mapa',
+    loadErrorMessage: 'Revisa tu conexión y vuelve a cargar la página.',
+    credit: 'Mapa demo y SDK de Mappedin · hecho por Felipe Chavarri',
+    disclaimer: 'Demo ilustrativa. Las marcas y logos pertenecen a sus dueños, que no participan ni respaldan esta página.',
+    switchTo: 'EN',
+  },
+  en: {
+    appName: 'Theme trails',
+    subtitle: 'Branded mall trails demo · Mappedin JS',
+    stepChoose: '1 · Choose',
+    stepWalk: '2 · Walk',
+    stepDone: '3 · Your coupons',
+    loading: 'Loading map…',
+    chooseTitle: 'What are you in the mood for?',
+    chooseMessage: 'Pick a trail and the map walks you through its stores. You start at the information desk; tap the map to change it.',
+    routeMessage: (stops: number, m: number, min: number) => `${stops} stores · ${m} m · about ${min} min walking`,
+    noRoute: 'No route from this point. Tap another spot in the corridor.',
+    start: 'Start the trail',
+    otherTrail: 'Another trail',
+    walkingTitle: 'On the way…',
+    walkingMessage: (next: string) => `Next stop: ${next}. Simulated Blue Dot.`,
+    stop: 'Stop',
+    stopLabel: (n: number, total: number) => `Stop ${n} of ${total}`,
+    offerTitle: "Tenant's offer",
+    offerBody: "This is where the store posts today's coupon or promotion from the mall's CMS.",
+    save: 'Save and continue',
+    skip: 'Continue',
+    passing: 'Passing by',
+    eventLabel: 'Event',
+    doneTitle: 'Trail complete',
+    doneMessage: (saved: number, seen: number) => `You saved ${saved} coupons and passed ${seen} stores with offers.`,
+    doneNone: 'Your saved coupons show up here.',
+    mallNote: 'For the mall: every stop and every pass-by is a measurable impression per tenant.',
+    startOver: 'Choose another trail',
+    youAreHere: 'You are here',
+    loadErrorTitle: 'The map could not load',
+    loadErrorMessage: 'Check your connection and reload the page.',
+    credit: 'Demo map and SDK by Mappedin · built by Felipe Chavarri',
+    disclaimer: 'Illustrative demo. Brands and logos belong to their owners, who do not take part in or endorse this page.',
+    switchTo: 'ES',
+  },
+};
+
+// Spanish by default; ?lang=en or a saved choice switch to English.
+function detect(): Lang {
+  const param = new URLSearchParams(location.search).get('lang');
+  if (param === 'es' || param === 'en') return param;
+  try {
+    const saved = localStorage.getItem(LANG_KEY);
+    if (saved === 'es' || saved === 'en') return saved;
+  } catch {
+    // Storage can be blocked; Spanish is the default.
+  }
+  return 'es';
+}
+
+export const lang: Lang = detect();
+export const t = strings[lang];
+
+export function switchLang() {
+  const next: Lang = lang === 'es' ? 'en' : 'es';
+  try {
+    localStorage.setItem(LANG_KEY, next);
+  } catch {
+    // Without storage the URL parameter below still carries the choice.
+  }
+  const url = new URL(location.href);
+  url.searchParams.set('lang', next);
+  location.href = url.toString();
+}
