@@ -10,6 +10,18 @@ A mall wayfinding demo built on [Mappedin JS](https://developer.mappedin.com/) a
 - **Trails as buyer journeys.** Each trail is a curated list of stores, routed in one go with `getDirectionsMultiDestination` and drawn as a multi-leg path.
 - **Offers in the path, not in an app.** The walk pauses at each stop with the tenant's offer, and stores or events within a few metres of the route show up as the Blue Dot passes them.
 - **Something the mall can measure.** Every stop and every pass-by is an impression per tenant, which is the basis for sponsored trails.
+- **A reason to walk the trail.** The mascot game below turns impressions into store visits.
+
+## Catch me if you can! (¡Atrápame si puedes!)
+
+A game on top of the trails, on by default (`?game=0` turns it off). Kinti, a hummingbird mascot made for the demo, shows up on the trail and hides inside one of its stores:
+
+- **In the corridor.** Two Kintis appear on the map with a countdown, one classic and one dressed for the trail. When the Blue Dot reaches one, the walk waits and she flutters around the screen: one tap catches her.
+- **Inside a store.** She flies into the trail's second stop and can only be caught from inside. The Blue Dot walks into the store, the shopper confirms the visit with the store's QR code (simulated) and gets a bonus coupon valid only there, that day. This turns an impression into a store visit.
+- **Points and album.** Each catch adds points and a variant to an album (eight in all). Past a threshold, an illustrative mall reward unlocks. Points stay in the browser only; the album has a reset button.
+- **Mall dashboard.** At the end, the session's appearances, catches, store visits and coupons, with the visits each store got from Kinti: the basis for selling sponsored visits and moving people to quiet zones.
+
+In a real mall the catch inside a store would be confirmed by the indoor position inside the store's polygon plus a QR or NFC tag at the back of the store, because positioning error is largest at the door.
 
 ## Brands
 
