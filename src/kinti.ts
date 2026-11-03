@@ -1,4 +1,4 @@
-// «¡Atrápame si puedes!»: Kinti, the mall's hummingbird mascot, shows up along the
+// «¡Atrápame si puedes!»: Kinti, the hummingbird mascot of Atlas Kinetix, shows up along the
 // trail and hides inside one of its stores. Catching her earns points and fills an
 // album. The demo keeps points and album in the browser only (no sign-up).
 

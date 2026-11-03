@@ -14,7 +14,7 @@ A mall wayfinding demo built on [Mappedin JS](https://developer.mappedin.com/) a
 
 ## Catch me if you can! (¡Atrápame si puedes!)
 
-A game on top of the trails, on by default (`?game=0` turns it off). Kinti, a hummingbird mascot made for the demo, shows up on the trail and hides inside one of its stores:
+A game on top of the trails, on by default (`?game=0` turns it off). Kinti, the hummingbird mascot of Atlas Kinetix (*q'inti* is hummingbird in Quechua), shows up on the trail and hides inside one of its stores:
 
 - **In the corridor.** Two Kintis appear on the map with a countdown, one classic and one dressed for the trail. When the Blue Dot reaches one, the walk waits and she flutters around the screen: one tap catches her.
 - **Inside a store.** She flies into the trail's second stop and can only be caught from inside. The Blue Dot walks into the store, the shopper confirms the visit with the store's QR code (simulated) and gets a bonus coupon valid only there, that day. This turns an impression into a store visit.

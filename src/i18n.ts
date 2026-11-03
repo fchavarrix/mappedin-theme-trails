@@ -41,7 +41,7 @@ const strings = {
     // «¡Atrápame si puedes!»
     gameName: '¡Atrápame si puedes!',
     gameToggle: 'Jugar «¡Atrápame si puedes!»',
-    gameToggleHint: 'Kinti, la mascota del mall, aparece en tu ruta y se esconde en una tienda. Atrápala para sumar puntos.',
+    gameToggleHint: 'Kinti, la mascota de Atlas Kinetix, aparece en tu ruta y se esconde en una tienda. Atrápala para sumar puntos.',
     pts: 'pts',
     kintiAppears: 'Kinti apareció en tu ruta',
     kintiHides: (store: string) => `¡Me escondí en ${store}… atrápame si puedes!`,
@@ -117,7 +117,7 @@ const strings = {
     switchTo: 'ES',
     gameName: 'Catch me if you can!',
     gameToggle: 'Play "Catch me if you can!"',
-    gameToggleHint: 'Kinti, the mall mascot, shows up on your trail and hides in a store. Catch her to earn points.',
+    gameToggleHint: "Kinti, Atlas Kinetix's mascot, shows up on your trail and hides in a store. Catch her to earn points.",
     pts: 'pts',
     kintiAppears: 'Kinti showed up on your trail',
     kintiHides: (store: string) => `I'm hiding in ${store}… catch me if you can!`,
